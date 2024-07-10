@@ -12,7 +12,6 @@
     <script src="greet.js" defer></script>
     <script src="transportFee.js" defer></script>
     <script src="totalPhoneBill.js" defer></script>
-    <script src="wordGame.js" defer></script>
     <script src="enoughAirtime.js" defer></script>
     
 
@@ -48,32 +47,7 @@
         };
       }
 
-      function wordGameWidget() {
-        return {
-          sentence: "",
-          longestWord: "",
-          shortestWord: "",
-          wordLengths: "",
-          analyzeSentence() {
-            if (this.sentence.trim() === "") {
-              this.longestWord = "";
-              this.shortestWord = "";
-              this.wordLengths = "";
-              return;
-            }
-            const words = this.sentence.split(" ");
-            this.longestWord = words.reduce((a, b) =>
-              a.length > b.length ? a : b
-            );
-            this.shortestWord = words.reduce((a, b) =>
-              a.length < b.length ? a : b
-            );
-            this.wordLengths = words
-              .map((word) => `${word}: ${word.length}`)
-              .join(", ");
-          },
-        };
-      }
+      
       function enoughAirtimeWidget() {
         return {
           usageString: "",
@@ -175,15 +149,6 @@
         />
         <button @click="calculateBill()">Calculate Bill</button>
         <p x-text="bill"></p>
-      </section>
-
-      <section x-data="wordGameWidget()">
-        <h2>Word Game Functions</h2>
-        <input type="text" x-model="sentence" placeholder="Enter a sentence" />
-        <button @click="analyzeSentence()">Analyze</button>
-        <p>Longest Word: <span x-text="longestWord"></span></p>
-        <p>Shortest Word: <span x-text="shortestWord"></span></p>
-        <p>Word Lengths: <span x-text="wordLengths"></span></p>
       </section>
 
       <section x-data="enoughAirtimeWidget()">
