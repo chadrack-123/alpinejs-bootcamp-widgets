@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AlpineJS Bootcamp Widgets</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.5.2/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="greet.js" defer></script>
+    <script src="transportFee.js" defer></script>
+    <script src="totalPhoneBill.js" defer></script>
+    <script src="wordGame.js" defer></script>
+    <script src="enoughAirtime.js" defer></script>
+    
+
+    <script>
+      function greetWidget() {
+        return {
+          name: "",
+          language: "english",
+          greeting: "",
+          greet() {
+            const greetings = {
+              english: `Hello, ${this.name}!`,
+              spanish: `Hola, ${this.name}!`,
+              french: `Bonjour, ${this.name}!`,
+            };
+            this.greeting = greetings[this.language];
+          },
+        };
+      }
+
+      function transportFeeWidget() {
+        return {
+          shift: "",
+          fee: "",
+          calculateFee() {
+            const fees = {
+              morning: "R20",
+              afternoon: "R10",
+              nightshift: "free",
+            };
+            this.fee = fees[this.shift] || "Select a shift";
+          },
+        };
+      }
+
+      function wordGameWidget() {
+        return {
+          sentence: "",
+          longestWord: "",
+          shortestWord: "",
+          wordLengths: "",
+          analyzeSentence() {
+            if (this.sentence.trim() === "") {
+              this.longestWord = "";
+              this.shortestWord = "";
+              this.wordLengths = "";
+              return;
+            }
+            const words = this.sentence.split(" ");
+            this.longestWord = words.reduce((a, b) =>
+              a.length > b.length ? a : b
+            );
+            this.shortestWord = words.reduce((a, b) =>
+              a.length < b.length ? a : b
+            );
+            this.wordLengths = words
+              .map((word) => `${word}: ${word.length}`)
+              .join(", ");
+          },
+        };
+      }
+      function enoughAirtimeWidget() {
+        return {
+          usageString: "",
+          airtimeAvailable: 0,
+          remainingAirtime: "",
+          calculateAirtime() {
+            const usageArray = this.usageString.split(",");
+            let totalUsage = 0;
+
+            usageArray.forEach((item) => {
+              item = item.trim();
+              if (item === "call") {
+                totalUsage += 2.75;
+              } else if (item === "sms") {
+                totalUsage += 0.65;
+              } else if (item === "data") {
+                totalUsage += 12.0;
+              }
+            });
+
+            const airtimeLeft = this.airtimeAvailable - totalUsage;
+
+            if (airtimeLeft >= 0) {
+              this.remainingAirtime = `Remaining airtime: R${airtimeLeft.toFixed(
+                2
+              )}`;
+            } else {
+              this.remainingAirtime = `You need R${Math.abs(
+                airtimeLeft
+              ).toFixed(2)} more airtime.`;
+            }
+          },
+        };
+      }
+      function totalPhoneBillWidget() {
+        return {
+          phoneString: "",
+          bill: "",
+          calculateBill() {
+            const callCost = 2.75;
+            const smsCost = 0.65;
+            const usage = this.phoneString.split(",");
+            let totalBill = 0;
+            usage.forEach((item) => {
+              item = item.trim();
+              if (item === "call") {
+                totalBill += callCost;
+              } else if (item === "sms") {
+                totalBill += smsCost;
+              }
+            });
+            this.bill = `R${totalBill.toFixed(2)}`;
+          },
+        };
+      }
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <h1>AlpineJS Bootcamp Widgets</h1>
+
+      <section x-data="greetWidget()">
+        <h2>Greet Function</h2>
+        <input type="text" x-model="name" placeholder="Enter your name" />
+        <select x-model="language">
+          <option value="english">English</option>
+          <option value="spanish">Spanish</option>
+          <option value="french">French</option>
+        </select>
+        <button @click="greet()">Greet</button>
+        <p x-text="greeting"></p>
+      </section>
+
+      <section x-data="transportFeeWidget()">
+        <h2>Transport Fee Function</h2>
+        <label>
+          <input type="radio" name="shift" value="morning" x-model="shift" />
+          Morning
+        </label>
+        <label>
+          <input type="radio" name="shift" value="afternoon" x-model="shift" />
+          Afternoon
+        </label>
+        <label>
+          <input type="radio" name="shift" value="nightshift" x-model="shift" />
+          Nightshift
+        </label>
+        <button @click="calculateFee()">Calculate Fee</button>
+        <p x-text="fee"></p>
+      </section>
+
+      <section x-data="totalPhoneBillWidget()">
+        <h2>Total Phone Bill Function</h2>
+        <input
+          type="text"
+          x-model="phoneString"
+          placeholder="Enter phone usage string"
+        />
+        <button @click="calculateBill()">Calculate Bill</button>
+        <p x-text="bill"></p>
+      </section>
+
+      <section x-data="wordGameWidget()">
+        <h2>Word Game Functions</h2>
+        <input type="text" x-model="sentence" placeholder="Enter a sentence" />
+        <button @click="analyzeSentence()">Analyze</button>
+        <p>Longest Word: <span x-text="longestWord"></span></p>
+        <p>Shortest Word: <span x-text="shortestWord"></span></p>
+        <p>Word Lengths: <span x-text="wordLengths"></span></p>
+      </section>
+
+      <section x-data="enoughAirtimeWidget()">
+        <h2>Enough Airtime Function</h2>
+        <input
+          type="text"
+          x-model="usageString"
+          placeholder="Enter usage string"
+        />
+        <input
+          type="number"
+          x-model="airtimeAvailable"
+          placeholder="Enter airtime available"
+        />
+        <button @click="calculateAirtime()">Calculate</button>
+        <p x-text="remainingAirtime"></p>
+      </section>
+    </main>
+  </body>
+</html>
