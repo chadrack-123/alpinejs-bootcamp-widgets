@@ -150,23 +150,23 @@
 
       <section x-data="enoughAirtimeWidget()">
         <h2>Enough Airtime Function</h2>
-        <div>
+        
           <input
             type="text"
             x-model="usageString"
             placeholder="Enter usage string (e.g., call,call,data,sms)"
           />
-        </div>
-        <div>
+        
+      
           <input
             type="number"
             x-model="airtimeAvailable"
             placeholder="Enter available airtime"
           />
-        </div>
-        <div>
+        
+        
           <button @click="calculateAirtime()">Calculate</button>
-        </div>
+        
         <div
           class="remainingAirtime"
           x-show="calculated"
