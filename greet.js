@@ -1,5 +1,4 @@
-function greetWidget() {
-    console.log("great")
+function  greetWidget() {
     return {
         name: '',
         language: 'english',
