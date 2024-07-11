@@ -2,7 +2,7 @@ function enoughAirtimeWidget() {
     return {
         usageString: '',
         airtimeAvailable: 0,
-        remainingAirtime: '',
+        remainingAirtime: 0,
         calculateAirtime() {
             const usageArray = this.usageString.split(',');
             let totalUsage = 0;
@@ -10,9 +10,9 @@ function enoughAirtimeWidget() {
             usageArray.forEach(item => {
                 item = item.trim();
                 if (item === 'call') {
-                    totalUsage += 2.75;
+                    totalUsage += 1.88;
                 } else if (item === 'sms') {
-                    totalUsage += 0.65;
+                    totalUsage += 0.75;
                 } else if (item === 'data') {
                     totalUsage += 12.00;
                 }
@@ -21,10 +21,14 @@ function enoughAirtimeWidget() {
             const airtimeLeft = this.airtimeAvailable - totalUsage;
 
             if (airtimeLeft >= 0) {
-                this.remainingAirtime = `Remaining airtime: R${airtimeLeft.toFixed(2)}`;
+                this.remainingAirtime = airtimeLeft.toFixed(2);
             } else {
-                this.remainingAirtime = `You need R${Math.abs(airtimeLeft).toFixed(2)} more airtime.`;
+                this.remainingAirtime = 0;
             }
         }
-    }
+    };
 }
+
+document.addEventListener('alpine:init', () => {
+    Alpine.data('enoughAirtime', enoughAirtimeWidget);
+});
