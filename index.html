@@ -50,7 +50,8 @@
         return {
           usageString: "",
           airtimeAvailable: 0,
-          remainingAirtime: 0,
+          remainingAirtime: "",
+          calculated: false,
           calculateAirtime() {
             const usageArray = this.usageString.split(",");
             let totalUsage = 0;
@@ -73,6 +74,8 @@
             } else {
               this.remainingAirtime = 0;
             }
+
+            this.calculated = true;
           },
         };
       }
@@ -147,18 +150,28 @@
 
       <section x-data="enoughAirtimeWidget()">
         <h2>Enough Airtime Function</h2>
-        <input
-          type="text"
-          x-model="usageString"
-          placeholder="Enter usage string"
-        />
-        <input
-          type="number"
-          x-model="airtimeAvailable"
-          placeholder="Enter airtime available"
-        />
-        <button @click="calculateAirtime()">Calculate</button>
-        <p x-text="remainingAirtime"></p>
+        <div>
+          <input
+            type="text"
+            x-model="usageString"
+            placeholder="Enter usage string (e.g., call,call,data,sms)"
+          />
+        </div>
+        <div>
+          <input
+            type="number"
+            x-model="airtimeAvailable"
+            placeholder="Enter available airtime"
+          />
+        </div>
+        <div>
+          <button @click="calculateAirtime()">Calculate</button>
+        </div>
+        <div
+          class="remainingAirtime"
+          x-show="calculated"
+          x-text="'Remaining airtime: R' + remainingAirtime"
+        ></div>
       </section>
     </main>
   </body>

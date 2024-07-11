@@ -2,7 +2,8 @@ function enoughAirtimeWidget() {
     return {
         usageString: '',
         airtimeAvailable: 0,
-        remainingAirtime: 0,
+        remainingAirtime: '',
+        calculated: false,
         calculateAirtime() {
             const usageArray = this.usageString.split(',');
             let totalUsage = 0;
@@ -25,8 +26,12 @@ function enoughAirtimeWidget() {
             } else {
                 this.remainingAirtime = 0;
             }
+
+            this.calculated = true;
         }
-    };
+
+        }    
+    
 }
 
 document.addEventListener('alpine:init', () => {
