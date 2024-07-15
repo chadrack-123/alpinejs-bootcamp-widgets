@@ -9,98 +9,10 @@
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.5.2/dist/cdn.min.js"
       defer
     ></script>
-    <script src="greet.js" defer></script>
-    <script src="transportFee.js" defer></script>
-    <script src="totalPhoneBill.js" defer></script>
-    <script src="enoughAirtime.js" defer></script>
-
-    <script>
-      function greetWidget() {
-        return {
-          name: "",
-          language: "english",
-          greeting: "",
-          greet() {
-            const greetings = {
-              english: `Hello, ${this.name}!`,
-              spanish: `Hola, ${this.name}!`,
-              french: `Bonjour, ${this.name}!`,
-            };
-            this.greeting = greetings[this.language];
-          },
-        };
-      }
-
-      function transportFeeWidget() {
-        return {
-          shift: "",
-          fee: "",
-          calculateFee() {
-            const fees = {
-              morning: "R20",
-              afternoon: "R10",
-              nightshift: "free",
-            };
-            this.fee = fees[this.shift] || "Select a shift";
-          },
-        };
-      }
-
-      function enoughAirtimeWidget() {
-        return {
-          usageString: "",
-          airtimeAvailable: 0,
-          remainingAirtime: "",
-          calculated: false,
-          calculateAirtime() {
-            const usageArray = this.usageString.split(",");
-            let totalUsage = 0;
-
-            usageArray.forEach((item) => {
-              item = item.trim();
-              if (item === "call") {
-                totalUsage += 1.88;
-              } else if (item === "sms") {
-                totalUsage += 0.75;
-              } else if (item === "data") {
-                totalUsage += 12.0;
-              }
-            });
-
-            const airtimeLeft = this.airtimeAvailable - totalUsage;
-
-            if (airtimeLeft >= 0) {
-              this.remainingAirtime = airtimeLeft.toFixed(2);
-            } else {
-              this.remainingAirtime = 0;
-            }
-
-            this.calculated = true;
-          },
-        };
-      }
-      function totalPhoneBillWidget() {
-        return {
-          phoneString: "",
-          bill: "",
-          calculateBill() {
-            const callCost = 2.75;
-            const smsCost = 0.65;
-            const usage = this.phoneString.split(",");
-            let totalBill = 0;
-            usage.forEach((item) => {
-              item = item.trim();
-              if (item === "call") {
-                totalBill += callCost;
-              } else if (item === "sms") {
-                totalBill += smsCost;
-              }
-            });
-            this.bill = `R${totalBill.toFixed(2)}`;
-          },
-        };
-      }
-    </script>
+    <script src="greet.js"></script>
+    <script src="transportFee.js" ></script>
+    <script src="totalPhoneBill.js" ></script>
+    <script src="enoughAirtime.js" ></script>
   </head>
 
   <body>

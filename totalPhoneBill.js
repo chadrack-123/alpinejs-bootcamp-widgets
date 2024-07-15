@@ -19,3 +19,7 @@ function totalPhoneBillWidget() {
         }
     }
 }
+
+document.addEventListener('alpine:init', () => {
+    Alpine.data('totalPhoneBillWidget', totalPhoneBillWidget);
+});

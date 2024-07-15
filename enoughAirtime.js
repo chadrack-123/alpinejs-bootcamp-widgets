@@ -35,5 +35,5 @@ function enoughAirtimeWidget() {
 }
 
 document.addEventListener('alpine:init', () => {
-    Alpine.data('enoughAirtime', enoughAirtimeWidget);
+    Alpine.data('enoughAirtimeWidget', enoughAirtimeWidget);
 });

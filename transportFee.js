@@ -12,3 +12,8 @@ function transportFeeWidget() {
         }
     }
 }
+
+
+document.addEventListener('alpine:init', () => {
+    Alpine.data('transportFeeWidget', transportFeeWidget);
+});
